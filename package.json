@@ -2,14 +2,15 @@
   "name": "systemman",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "SystemManager.js",
   "scripts": {
-    "test": "node ./test.js"
+    "test": "node test/test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "wavy": "^1.0.4",
     "winston": "^3.2.1",
     "ws": "^7.3.0"
   }
