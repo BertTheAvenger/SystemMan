@@ -15,7 +15,33 @@ async function start() {
     });
     log("Test WS open, sending ID packet");
 
-    function onMsg() {
+    function sendData(){
+        ws.send(Math.floor(Math.random() * 100));
+    }
+
+
+    let intervalControl = null;
+    function onMsg(msg) {
+        let obj = JSON.parse(msg.data);
+        switch (obj.type) {
+            case "command":
+                switch (obj.command) {
+                    case "start":
+                        intervalControl = setInterval(sendData, 1000);
+                        log("Start command received.");
+                        break;
+                    case "stop":
+                        clearInterval(intervalControl);
+                        log("Stop command received.");
+                        break;
+                }
+                break;
+            case "setparam":
+                break;
+            case "request":
+                break;
+
+        }
 
     }
     ws.onmessage = onMsg;

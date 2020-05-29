@@ -12,8 +12,11 @@ module.exports = class SystemManager {
     }
 
     registerModule(mod) {
+        if (!mod) {
+            throw new Error(`Module was undefined when registering. Is the module class being exported?`);
+        }
         if (!mod.type) {
-            throw new Error(`Module type not found when registering module with class name >>${mod.name}<<. Has "static type='your_type_here'" not been set in the class?`);
+            throw new Error(`Module type not found when registering module with class name >>${mod.name}<<. Has "static type='your_type_here'" been set in the class?`);
         }
         log(`Registered module type >${mod.type}<`);
         this.moduleClasses.push(mod);
@@ -45,13 +48,13 @@ module.exports = class SystemManager {
                     //Find the target module. Index 0 in the target tuple.
                     const t = this.moduleInstances.find(m => m.uid === target[0]);
                     if(!t) {
-                        throw new Error(`Couldn't find target output [>>${target[0]}<<, ${target[1]}] when linking input [${mod.uid}, ${input.uid}]. This is probably a typo in the definition for "${mod.uid}"`);
+                        throw new Error(`Couldn't find target output >[>>${target[0]}<<, ${target[1]}]< when linking input >[${mod.uid}, ${input.uid}]<. This is probably a typo in the definition for >${mod.uid}<`);
                     }
 
                     //Find the target output. Index 1 of the target tuple
                     const out = t._outputs.find(o => o.uid === target[1]);
                     if(!out) {
-                        throw new Error(`Couldn't find target output [${target[0]}, >>${target[1]}<<] when linking input [${mod.uid}, ${input.uid}]. This is probably a typo in the definition for "${mod.uid}"`);
+                        throw new Error(`Couldn't find target output >[${target[0]}, >>${target[1]}<<]< when linking input >[${mod.uid}, ${input.uid}]<. This is probably a typo in the definition for >${mod.uid}<`);
                     }
 
                     //Link the output to the input.

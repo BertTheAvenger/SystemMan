@@ -17,17 +17,25 @@ const model = {
             uid: "connectionProducer",
         },
         {
-            type: "test_module",
-            uid: "tm1",
-            physicalUid: 12498120890981,
-            connectionProvider: ["connectionProducer", "connections"],
+            type: "P_ir_distance_sensor",
+            uid: "irds1",
+            physicalUid: 918,
+            module_connections: ["connectionProducer", "connections"],
+        },
+        {
+            type: "rate_calculator",
+            uid: "consoleLog1",
+            source: ["irds1", "distance_out"],
         }
     ]
 };
 
 sm.registerModule(require("../Modules/Physical/ModuleConnectionProducer"));
 sm.registerModule(require("~/Modules/Physical/TestModule"));
+sm.registerModule(require("~/Modules/ConsoleLogger"));
+sm.registerModule(require("~/Modules/Physical/IRDistanceSensor"));
+sm.registerModule(require("~/Modules/MessageRateCalculator"));
 sm.load(model);
 
 
-require("./ModuleEmulator");
+//require("./ModuleEmulator");
